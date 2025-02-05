@@ -13,3 +13,11 @@ migrate-up:
 # Rollback Migrations
 migrate-down:
 	godotenv -f .env $(MIGRATE_CMD) down 1
+
+# Create New Migration
+migrate-create:
+	@if [ -z "$(name)" ]; then \
+		echo "Error: Please specify a migration name using 'make migrate-create name=<migration_name>'"; \
+		exit 1; \
+	fi
+	migrate create -ext sql -dir migration -seq $(name)
