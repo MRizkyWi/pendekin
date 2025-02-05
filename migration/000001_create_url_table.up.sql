@@ -1,0 +1,9 @@
+CREATE TABLE url (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    short_url VARCHAR(255) NOT NULL,
+    actual_url VARCHAR(2083) NOT NULL,
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_short_url_is_active (short_url, is_active)
+);
