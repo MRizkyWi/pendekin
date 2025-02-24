@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 
+	"pendekin/cache"
 	"pendekin/config"
 	"pendekin/repository"
 	"pendekin/route"
@@ -15,9 +16,10 @@ import (
 func main() {
 	config.LoadEnv()
 	config.ConnectDB()
+	cache.ConnectRedis()
 
 	urlRepo := repository.NewURLRepository(config.DB)
-	urlService := service.NewUrlService(urlRepo)
+	urlService := service.NewUrlService(urlRepo, cache.GetRedisClient())
 
 	router := mux.NewRouter()
 	router = route.InitializeRoutes(router, *urlService)

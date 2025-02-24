@@ -14,30 +14,35 @@ Pendekin is a simple URL shortener service built with Go. It allows you to short
 ### Prerequisites
 
 - Go 1.16+
-- MySQL
+- Docker
 
 ### Installation
 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/pendekin.git
+   git clone https://github.com/mrizkywi/pendekin.git
    cd pendekin
    ```
 
-2. Copy the example environment file and update it with your database credentials:
+2. Run the docker compose build
+   ```bash
+   docker compose up --build
+   ```
+
+3. Copy the example environment file and update it with your database credentials:
 
    ```bash
    cp .env.example .env
    ```
 
-3. Run the database migrations to set up the MySQL database:
+4. Run the database migrations to set up the MySQL database:
 
    ```bash
    make migrate-up
    ```
 
-4. Build and run the application:
+5. Build and run the application:
 
    ```bash
    go build -o pendekin cmd/main.go
@@ -52,7 +57,8 @@ Pendekin is a simple URL shortener service built with Go. It allows you to short
 
 ### Project Structure
 
-- `cmd/main.go`: Entry point for the application.
+- `cmd/http/main.go`: Entry point for the application.
+- `cache/`: Cache folder
 - `config/`: Configuration files and database connection setup.
 - `controller/`: HTTP handlers for API endpoints.
 - `model/`: Data models and request/response structures.
@@ -67,3 +73,4 @@ Contributions are welcome! Please fork the repository and submit a pull request 
 ### License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+

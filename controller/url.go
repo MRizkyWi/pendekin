@@ -25,11 +25,15 @@ func (u *UrlController) ShortenUrl(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	url, err := u.urlService.Save(req)
+
+	ctx := r.Context()
+
+	url, err := u.urlService.Save(ctx, req)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(url)
 }
@@ -37,7 +41,10 @@ func (u *UrlController) ShortenUrl(w http.ResponseWriter, r *http.Request) {
 func (u *UrlController) GetByShortUrl(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	shortUrl := params["shortUrl"]
-	url, err := u.urlService.GetByShortUrl(shortUrl)
+
+	ctx := r.Context()
+
+	url, err := u.urlService.GetByShortUrl(ctx, shortUrl)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusNotFound)
 		return
@@ -51,7 +58,10 @@ func (u *UrlController) UpdateStatus(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	err := u.urlService.UpdateStatus(req)
+
+	ctx := r.Context()
+
+	err := u.urlService.UpdateStatus(ctx, req)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
